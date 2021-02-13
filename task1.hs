@@ -1,3 +1,4 @@
+--auxiliary functions
 deletei2:: ([a],[a]) -> [a]
 deletei2 twolists = (fst twolists) ++ (tail (snd twolists))
 deletei:: Int -> [a] -> [a]
