@@ -5,6 +5,7 @@ instance Show a => Show (Tagged_tree a) where
     show (Leaf x a) = show "|" ++ show x ++ show ":" ++ show a ++ show "|"
     show (Node x left right) = show x ++ show ":" ++ show "<" ++ show left ++ show "+" ++ show right ++ show ">"
 
+--auxiliary functions
 find_pow number = aux number 0 where
     aux number cnt
      |number == 0 = 2^cnt
@@ -19,13 +20,14 @@ addTags list = aux list [] 0 where
     aux [] res ind = res
     aux (x:xs) res ind = aux xs (res ++ [(ind, x)]) (ind + 1)
 
-
+-- function that creates a tree out of a list
 list_to_tree list = fun1 (addTags list) where
     fun1 [] = Empty
     fun1 [x] = Leaf (fst x) (snd x)
     fun1 list = aux (splitList list) where
         aux tuple = Node (fst (last (fst tuple))) (fun1 (fst tuple)) (fun1 (snd tuple))
 
+-- function to find an element for a given index
 get_elem index tree = aux tree index where
     aux Empty ind = error "no such element"
     aux (Leaf tag elem) ind = elem
